@@ -1,7 +1,11 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import Background3D from "@/components/Background3D";
+import dynamic from "next/dynamic";
+
+const Background3D = dynamic(() => import("@/components/Background3D"), {
+  ssr: false,
+});
 
 const inter = Inter({ subsets: ["latin"] });
 
