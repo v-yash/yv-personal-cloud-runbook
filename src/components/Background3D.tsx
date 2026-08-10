@@ -1,8 +1,42 @@
 "use client";
 import { Canvas, useFrame } from "@react-three/fiber";
-import { Stars, Float, Icosahedron, MeshDistortMaterial } from "@react-three/drei";
+import { Stars, Float, MeshDistortMaterial, Sparkles } from "@react-three/drei";
 import { useRef } from "react";
 import * as THREE from "three";
+
+function CloudCore() {
+  const meshRef = useRef<THREE.Mesh>(null);
+  
+  useFrame((state) => {
+    if (meshRef.current) {
+      meshRef.current.rotation.y = state.clock.elapsedTime * 0.1;
+      meshRef.current.rotation.z = Math.sin(state.clock.elapsedTime * 0.2) * 0.1;
+    }
+  });
+
+  return (
+    <Float speed={2} rotationIntensity={0.5} floatIntensity={1}>
+      <mesh ref={meshRef}>
+        <sphereGeometry args={[2.5, 64, 64]} />
+        <MeshDistortMaterial 
+          color="#3b82f6" 
+          emissive="#1e40af" 
+          emissiveIntensity={0.5}
+          distort={0.3} 
+          speed={2} 
+          wireframe={true}
+          transparent
+          opacity={0.3}
+        />
+      </mesh>
+      {/* Inner solid sphere to block stars behind the wireframe */}
+      <mesh scale={0.98}>
+        <sphereGeometry args={[2.5, 32, 32]} />
+        <meshBasicMaterial color="#020617" />
+      </mesh>
+    </Float>
+  );
+}
 
 export default function Background3D() {
   return (
@@ -13,33 +47,21 @@ export default function Background3D() {
       width: "100vw", 
       height: "100vh", 
       zIndex: -1, 
-      background: "radial-gradient(circle at center, #020617 0%, #000000 100%)" 
+      background: "radial-gradient(circle at center, #0f172a 0%, #020617 100%)" 
     }}>
-      <Canvas camera={{ position: [0, 0, 5] }}>
-        <ambientLight intensity={0.5} />
-        <directionalLight position={[10, 10, 5]} intensity={1} />
+      <Canvas camera={{ position: [0, 0, 8], fov: 60 }}>
+        <fog attach="fog" args={['#020617', 5, 15]} />
+        <ambientLight intensity={1} />
         
-        {/* Floating techy shapes */}
-        <Float speed={2} rotationIntensity={1.5} floatIntensity={2}>
-          <Icosahedron args={[1, 1]} position={[3, 1.5, -2]}>
-            <MeshDistortMaterial color="#3b82f6" attach="material" distort={0.4} speed={2} wireframe />
-          </Icosahedron>
-        </Float>
+        {/* Deep background stars */}
+        <Stars radius={100} depth={50} count={3000} factor={4} saturation={1} fade speed={1} />
         
-        <Float speed={1.5} rotationIntensity={2} floatIntensity={1.5}>
-          <Icosahedron args={[0.8, 1]} position={[-4, -1, -3]}>
-            <MeshDistortMaterial color="#8b5cf6" attach="material" distort={0.3} speed={1.5} wireframe />
-          </Icosahedron>
-        </Float>
+        {/* Core Cloud Object */}
+        <CloudCore />
 
-        <Float speed={2.5} rotationIntensity={1} floatIntensity={2}>
-          <Icosahedron args={[0.5, 0]} position={[2, -2, -1]}>
-            <MeshDistortMaterial color="#06b6d4" attach="material" distort={0.5} speed={3} wireframe />
-          </Icosahedron>
-        </Float>
-
-        {/* Dynamic Starfield */}
-        <Stars radius={100} depth={50} count={5000} factor={4} saturation={0} fade speed={1.5} />
+        {/* Ambient Tech Sparkles */}
+        <Sparkles count={300} scale={15} size={2} speed={0.4} opacity={0.3} color="#60a5fa" />
+        
       </Canvas>
     </div>
   );
