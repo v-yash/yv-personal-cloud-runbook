@@ -19,14 +19,14 @@ function CloudCore() {
       <mesh ref={meshRef}>
         <sphereGeometry args={[2.5, 64, 64]} />
         <MeshDistortMaterial 
-          color="#3b82f6" 
-          emissive="#1e40af" 
-          emissiveIntensity={0.5}
-          distort={0.3} 
-          speed={2} 
+          color="#60a5fa" 
+          emissive="#3b82f6" 
+          emissiveIntensity={2}
+          distort={0.4} 
+          speed={3} 
           wireframe={true}
           transparent
-          opacity={0.3}
+          opacity={0.9}
         />
       </mesh>
       {/* Inner solid sphere to block stars behind the wireframe */}
@@ -60,7 +60,7 @@ export default function Background3D() {
         <CloudCore />
 
         {/* Ambient Tech Sparkles */}
-        <Sparkles count={300} scale={15} size={2} speed={0.4} opacity={0.3} color="#60a5fa" />
+        <Sparkles count={500} scale={15} size={4} speed={0.8} opacity={1} color="#93c5fd" />
         
       </Canvas>
     </div>

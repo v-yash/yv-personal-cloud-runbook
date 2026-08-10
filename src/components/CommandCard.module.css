@@ -6,6 +6,9 @@
   gap: 1rem;
   position: relative;
   overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  border-radius: 12px;
 }
 
 .card::before {
@@ -13,11 +16,19 @@
   position: absolute;
   top: 0;
   left: 0;
-  width: 3px;
+  width: 4px;
   height: 100%;
-  background: linear-gradient(to bottom, #3b82f6, #a78bfa);
-  opacity: 0.3;
+  background: linear-gradient(to bottom, #3b82f6, #8b5cf6, #ec4899);
+  opacity: 0;
   transition: opacity 0.3s ease;
+}
+
+.card:hover {
+  background: rgba(30, 41, 59, 0.9);
+  border-color: rgba(96, 165, 250, 0.5);
+  box-shadow: 0 10px 40px rgba(59, 130, 246, 0.3), inset 0 0 20px rgba(59, 130, 246, 0.1);
+  transform: translateY(-8px) scale(1.02);
+  z-index: 10;
 }
 
 .card:hover::before {

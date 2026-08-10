@@ -25,7 +25,6 @@ export default function CommandCard({ command }: Props) {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, scale: 0.95 }}
-      whileHover={{ y: -5, scale: 1.01, boxShadow: "0 20px 40px rgba(0,0,0,0.5)" }}
       transition={{ type: "spring", stiffness: 400, damping: 30 }}
     >
       <div className={styles.header}>
