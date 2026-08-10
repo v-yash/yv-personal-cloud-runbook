@@ -68,15 +68,38 @@ export default function Home() {
         </div>
 
         <div className={styles.commandsContainer}>
-          <AnimatePresence>
+          <AnimatePresence mode="wait">
             {filteredCommands.length > 0 ? (
-              filteredCommands.map(cmd => (
-                <CommandCard key={cmd.id} command={cmd} />
-              ))
+              <motion.div
+                key={activeCategory || searchQuery || "all"}
+                initial="hidden"
+                animate="show"
+                variants={{
+                  hidden: { opacity: 0 },
+                  show: {
+                    opacity: 1,
+                    transition: { staggerChildren: 0.04 }
+                  }
+                }}
+              >
+                {filteredCommands.map(cmd => (
+                  <motion.div 
+                    key={cmd.id}
+                    variants={{
+                      hidden: { opacity: 0, y: 20 },
+                      show: { opacity: 1, y: 0, transition: { type: "spring", stiffness: 300, damping: 24 } }
+                    }}
+                  >
+                    <CommandCard command={cmd} />
+                  </motion.div>
+                ))}
+              </motion.div>
             ) : (
               <motion.div 
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
+                key="empty"
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.95 }}
                 className={styles.noResults}
               >
                 No commands found. Try adjusting your search or category.
