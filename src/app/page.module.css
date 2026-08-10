@@ -1,0 +1,79 @@
+.main {
+  display: flex;
+  min-height: 100vh;
+}
+
+.content {
+  margin-left: var(--sidebar-width);
+  flex: 1;
+  padding: 3rem 4rem;
+  max-width: 1200px;
+}
+
+.header {
+  margin-bottom: 3rem;
+  position: sticky;
+  top: 2rem;
+  z-index: 20;
+}
+
+.searchContainer {
+  position: relative;
+  width: 100%;
+  max-width: 800px;
+}
+
+.searchIcon {
+  position: absolute;
+  left: 1.25rem;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
+}
+
+.searchInput {
+  width: 100%;
+  padding: 1.25rem 1.25rem 1.25rem 3.5rem;
+  font-size: 1.1rem;
+  background: rgba(15, 23, 42, 0.6);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+  color: #fff;
+  outline: none;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+}
+
+.searchInput:focus {
+  border-color: #3b82f6;
+  background: rgba(15, 23, 42, 0.8);
+  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2), 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+.searchInput::placeholder {
+  color: #64748b;
+}
+
+.commandsContainer {
+  margin-top: 2rem;
+  max-width: 800px;
+}
+
+.noResults {
+  padding: 3rem;
+  text-align: center;
+  color: #94a3b8;
+  background: rgba(15, 23, 42, 0.4);
+  border: 1px dashed rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  font-size: 1.1rem;
+}
+
+@media (max-width: 768px) {
+  .content {
+    margin-left: 0;
+    padding: 1.5rem;
+  }
+}
