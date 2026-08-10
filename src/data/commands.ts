@@ -1,4 +1,4 @@
-export type Category = "AWS" | "Linux" | "Networking" | "Kubernetes" | "Karpenter" | "Debugging" | "Docker" | "Git" | "Terraform" | "Database" | "Security" | "Helm";
+export type Category = "AWS" | "GCP" | "Linux" | "Networking" | "Kubernetes" | "Karpenter" | "Debugging" | "Docker" | "Git" | "Terraform" | "Database" | "Security" | "Helm" | "CI/CD";
 
 export interface CommandEntry {
   id: string;
@@ -122,5 +122,74 @@ export const commands: CommandEntry[] = [
   { id: "promql-memory-usage", category: "Debugging", title: "PromQL: Pod Memory Usage", description: "Gets the current memory usage of pods in megabytes.", command: "container_memory_usage_bytes{namespace=\"default\"} / 1024 / 1024", tags: ["prometheus", "promql", "metrics", "memory"] },
   { id: "grafana-restart", category: "Debugging", title: "Restart Grafana Server", description: "Restarts the grafana systemd service.", command: "sudo systemctl restart grafana-server", tags: ["grafana", "systemd", "restart"] },
   { id: "ssl-generate-csr", category: "Security", title: "Generate CSR & Private Key", description: "Creates a new 2048-bit RSA private key and a Certificate Signing Request.", command: "openssl req -new -newkey rsa:2048 -nodes -keyout mydomain.key -out mydomain.csr", tags: ["ssl", "openssl", "csr", "keygen"] },
-  { id: "ssl-check-cert", category: "Security", title: "Check local SSL Certificate", description: "Reads an x509 certificate file and outputs its details.", command: "openssl x509 -in certificate.crt -text -noout", tags: ["ssl", "openssl", "verify"] }
+  { id: "ssl-check-cert", category: "Security", title: "Check local SSL Certificate", description: "Reads an x509 certificate file and outputs its details.", command: "openssl x509 -in certificate.crt -text -noout", tags: ["ssl", "openssl", "verify"] },
+
+  // ====================== GCP (GOOGLE CLOUD) ======================
+  { id: "gcp-auth-login", category: "GCP", title: "Authenticate with Google Cloud", description: "Authorizes the gcloud CLI to access Google Cloud Platform with your user credentials.", command: "gcloud auth login", tags: ["gcp", "auth", "login"] },
+  { id: "gcp-set-project", category: "GCP", title: "Set Active GCP Project", description: "Sets the default project ID for all subsequent gcloud commands.", command: "gcloud config set project <project-id>", tags: ["gcp", "project", "config"] },
+  { id: "gcp-gke-credentials", category: "GCP", title: "Get GKE Cluster Credentials", description: "Fetches cluster credentials for Google Kubernetes Engine and updates your local kubeconfig.", command: "gcloud container clusters get-credentials <cluster-name> --region <region>", tags: ["gcp", "gke", "kubernetes"] },
+  { id: "gcp-compute-instances", category: "GCP", title: "List GCE VM Instances", description: "Lists all Google Compute Engine instances in the active project.", command: "gcloud compute instances list", tags: ["gcp", "compute", "vms"] },
+  { id: "gcp-compute-ssh", category: "GCP", title: "SSH into GCE Instance", description: "Securely connects to a Compute Engine virtual machine via Identity-Aware Proxy (IAP).", command: "gcloud compute ssh <instance-name> --zone <zone> --tunnel-through-iap", tags: ["gcp", "ssh", "iap", "compute"] },
+  { id: "gcp-iam-policy", category: "GCP", title: "Get Project IAM Policy", description: "Fetches the complete IAM policy (roles and members) bound to the current project.", command: "gcloud projects get-iam-policy <project-id>", tags: ["gcp", "iam", "security"] },
+  { id: "gcp-gsutil-rsync", category: "GCP", title: "Sync local folder to GCS Bucket", description: "Synchronizes the contents of a local directory to a Google Cloud Storage bucket.", command: "gsutil -m rsync -r ./my-folder gs://my-gcs-bucket", tags: ["gcp", "storage", "gcs", "sync"] },
+  { id: "gcp-gsutil-size", category: "GCP", title: "Calculate GCS Bucket Size", description: "Calculates the total size and number of objects in a Cloud Storage bucket.", command: "gsutil du -sh gs://my-gcs-bucket", tags: ["gcp", "storage", "gcs", "size"] },
+  { id: "gcp-bq-query", category: "GCP", title: "Run BigQuery SQL", description: "Executes a standard SQL query directly against BigQuery from the command line.", command: "bq query --use_legacy_sql=false 'SELECT * FROM `project.dataset.table` LIMIT 10'", tags: ["gcp", "bigquery", "sql", "data"] },
+  { id: "gcp-cloud-run-deploy", category: "GCP", title: "Deploy to Cloud Run", description: "Deploys a container image to Cloud Run as a fully managed serverless service.", command: "gcloud run deploy <service-name> --image <gcr.io/image-path> --region <region> --allow-unauthenticated", tags: ["gcp", "serverless", "deploy", "cloud-run"] },
+  { id: "gcp-secrets-access", category: "GCP", title: "Access Secret Manager Value", description: "Retrieves the decoded payload of a secret stored in GCP Secret Manager.", command: "gcloud secrets versions access latest --secret=\"<secret-name>\"", tags: ["gcp", "secrets", "security"] },
+  { id: "gcp-pubsub-publish", category: "GCP", title: "Publish Pub/Sub Message", description: "Publishes a test message to a Cloud Pub/Sub topic.", command: "gcloud pubsub topics publish <topic-name> --message=\"Hello World\"", tags: ["gcp", "pubsub", "messaging"] },
+  { id: "gcp-network-list", category: "GCP", title: "List VPC Networks", description: "Lists all VPC networks and their subnet modes in the project.", command: "gcloud compute networks list", tags: ["gcp", "vpc", "network"] },
+
+  // ====================== ADDITIONAL COMPREHENSIVE COMMANDS ======================
+  // Kubernetes Deep Dives
+  { id: "k8s-rollout-history", category: "Kubernetes", title: "View Rollout History", description: "Checks the revision history of a deployment.", command: "kubectl rollout history deployment/<name>", tags: ["k8s", "rollout", "history"] },
+  { id: "k8s-get-yaml", category: "Kubernetes", title: "Get Running Pod YAML", description: "Exports the live YAML configuration of a running pod.", command: "kubectl get pod <pod-name> -o yaml", tags: ["k8s", "yaml", "export"] },
+  { id: "k8s-patch", category: "Kubernetes", title: "Patch Resource Inline", description: "Updates a field on a resource without an editor.", command: "kubectl patch deployment <name> -p '{\"spec\": {\"replicas\": 3}}'", tags: ["k8s", "patch", "update"] },
+  
+  // Helm Additions
+  { id: "helm-upgrade-install", category: "Helm", title: "Upgrade or Install Release", description: "Installs a helm chart, or upgrades it if it already exists.", command: "helm upgrade --install <release-name> <chart-path>", tags: ["helm", "deploy", "upgrade"] },
+  { id: "helm-template", category: "Helm", title: "Render Helm Templates locally", description: "Renders the chart templates locally without applying them to the cluster.", command: "helm template <release-name> <chart-path>", tags: ["helm", "template", "dry-run"] },
+  
+  // AWS Extensions
+  { id: "aws-s3-cp", category: "AWS", title: "Copy File to S3", description: "Copies a single local file to an S3 bucket.", command: "aws s3 cp local-file.txt s3://my-bucket/", tags: ["aws", "s3", "copy"] },
+  { id: "aws-lambda-invoke", category: "AWS", title: "Invoke Lambda Function", description: "Synchronously invokes a Lambda function from the CLI.", command: "aws lambda invoke --function-name my-function --payload '{}' response.json", tags: ["aws", "lambda", "invoke"] },
+  { id: "aws-rds-describe", category: "AWS", title: "List RDS Instances", description: "Gets a list of all RDS database instances.", command: "aws rds describe-db-instances --query 'DBInstances[*].[DBInstanceIdentifier,DBInstanceStatus]'", tags: ["aws", "rds", "database"] },
+
+  // GCP Extensions
+  { id: "gcp-adc-login", category: "GCP", title: "Setup Application Default Credentials", description: "Authenticates your local environment so code can use GCP APIs natively.", command: "gcloud auth application-default login", tags: ["gcp", "auth", "adc"] },
+  { id: "gcp-run-services", category: "GCP", title: "List Cloud Run Services", description: "Lists all deployed Cloud Run services in the active project.", command: "gcloud run services list", tags: ["gcp", "cloud-run", "serverless"] },
+
+  // Advanced Linux Administration
+  { id: "linux-free-mem", category: "Linux", title: "Check Free Memory", description: "Displays total, used, and free memory in human-readable megabytes/gigabytes.", command: "free -hm", tags: ["linux", "memory", "ram"] },
+  { id: "linux-df", category: "Linux", title: "Check Disk Space", description: "Shows filesystem disk space usage and types.", command: "df -Th", tags: ["linux", "disk", "storage"] },
+  { id: "linux-find-chown", category: "Linux", title: "Find and Change Owner", description: "Finds files owned by root and changes them to another user.", command: "find /path -user root -exec chown user:group {} +", tags: ["linux", "chown", "permissions"] },
+  { id: "linux-tar-czf", category: "Linux", title: "Create tar.gz Archive", description: "Compresses a directory into a tarball.", command: "tar -czvf archive.tar.gz /path/to/dir", tags: ["linux", "tar", "compress"] },
+
+  // Networking Deep Dives
+  { id: "net-ip-route", category: "Networking", title: "Check IP Routing", description: "Determines exactly which interface and route will be used to reach an IP.", command: "ip route get 8.8.8.8", tags: ["networking", "route", "ip"] },
+  { id: "net-ping-interface", category: "Networking", title: "Ping via Specific Interface", description: "Forces ping to use a specific network interface.", command: "ping -I eth1 8.8.8.8", tags: ["networking", "ping", "interface"] },
+
+  // Docker Compose & Advanced
+  { id: "docker-compose-up", category: "Docker", title: "Docker Compose Up Detached", description: "Starts all services defined in a docker-compose.yml in the background.", command: "docker compose up -d", tags: ["docker", "compose", "daemon"] },
+  { id: "docker-inspect-ip", category: "Docker", title: "Get Container IP", description: "Extracts the internal IP address of a running docker container.", command: "docker inspect -f '{{range.NetworkSettings.Networks}}{{.IPAddress}}{{end}}' <container-id>", tags: ["docker", "inspect", "ip"] },
+  { id: "docker-logs-follow", category: "Docker", title: "Follow Container Logs", description: "Tails the logs of a docker container continuously.", command: "docker logs -f <container-id>", tags: ["docker", "logs", "tail"] },
+
+  // Git Power Moves
+  { id: "git-fetch-prune", category: "Git", title: "Fetch and Prune Remote Branches", description: "Fetches updates and removes local tracking branches that were deleted on remote.", command: "git fetch -p", tags: ["git", "fetch", "prune"] },
+  { id: "git-rebase-origin", category: "Git", title: "Rebase onto Origin Main", description: "Fetches and immediately rebases your current branch onto the latest origin/main.", command: "git pull --rebase origin main", tags: ["git", "rebase", "sync"] },
+  { id: "git-tag-release", category: "Git", title: "Create Annotated Tag", description: "Creates a version tag with a message.", command: "git tag -a v1.0.0 -m 'Release v1.0.0'", tags: ["git", "tag", "release"] },
+
+  // Terraform Pro Tricks
+  { id: "tf-init-upgrade", category: "Terraform", title: "Init and Upgrade Providers", description: "Initializes terraform and upgrades all providers to their latest allowed versions.", command: "terraform init -upgrade", tags: ["terraform", "init", "providers"] },
+  { id: "tf-workspace-list", category: "Terraform", title: "List Terraform Workspaces", description: "Shows all available state workspaces.", command: "terraform workspace list", tags: ["terraform", "workspace", "state"] },
+
+  // Database Mastery
+  { id: "db-pg-restore", category: "Database", title: "Restore PostgreSQL Database", description: "Restores a database from a pg_dump file.", command: "pg_restore -U <username> -d <dbname> -1 backup.sql", tags: ["postgres", "restore", "db"] },
+  { id: "db-mysql-dump", category: "Database", title: "Backup MySQL Database", description: "Dumps a MySQL database to an SQL script.", command: "mysqldump -u <username> -p <dbname> > backup.sql", tags: ["mysql", "dump", "backup"] },
+
+  // CI/CD Utilities
+  { id: "cicd-act", category: "CI/CD", title: "Run GitHub Actions Locally", description: "Uses nektos/act to run your github actions locally via docker.", command: "act -l", tags: ["github-actions", "act", "local"] },
+  
+  // Security Auditing
+  { id: "sec-nmap", category: "Security", title: "Scan Open Ports with Nmap", description: "Performs a fast network scan to find open ports on a target IP.", command: "nmap -F 192.168.1.1", tags: ["nmap", "scan", "ports"] },
+  { id: "sec-chmod-ssh", category: "Security", title: "Fix SSH Key Permissions", description: "Secures a private SSH key file so only the owner can read it.", command: "chmod 600 ~/.ssh/id_rsa", tags: ["ssh", "permissions", "security"] }
 ];
