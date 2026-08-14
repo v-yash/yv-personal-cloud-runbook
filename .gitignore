@@ -8,5 +8,9 @@ Thumbs.db
 *.swp
 *.swo
 
+# AI agent config (auto-generated, not for public repos)
+AGENTS.md
+CLAUDE.md
+
 # Misc
 *.log
