@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cloud Runbook | Yash V.</title>
+  <meta name="description" content="A premium, searchable reference for DevOps, SRE, and Cloud Infrastructure commands. 250+ battle-tested commands across Kubernetes, AWS, GCP, Docker, Terraform, and more." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <!-- Particle Background -->
+  <div id="particles-js"></div>
+
+  <!-- Sidebar -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-logo">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M12 19h8"></path>
+        <path d="m4 17 6-6-6-6"></path>
+      </svg>
+      <span class="text-gradient">Cloud Runbook</span>
+    </div>
+
+    <div class="sidebar-nav" id="sidebar-nav">
+      <h4 class="nav-title">Categories</h4>
+      <!-- Category buttons injected by JS -->
+    </div>
+  </aside>
+
+  <!-- Mobile Menu Toggle -->
+  <button class="mobile-menu-btn" id="mobile-menu-btn" aria-label="Toggle menu">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <line x1="3" y1="6" x2="21" y2="6"></line>
+      <line x1="3" y1="12" x2="21" y2="12"></line>
+      <line x1="3" y1="18" x2="21" y2="18"></line>
+    </svg>
+  </button>
+
+  <!-- Main Content -->
+  <main class="main-content">
+    <div class="header">
+      <div class="search-container">
+        <svg class="search-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="m21 21-4.34-4.34"></path>
+          <circle cx="11" cy="11" r="8"></circle>
+        </svg>
+        <input type="text" id="search-input" class="search-input" placeholder="Search commands, tags, or explanations..." autocomplete="off" />
+        <span class="search-count" id="search-count"></span>
+      </div>
+    </div>
+
+    <div class="commands-container" id="commands-container">
+      <!-- Command cards injected by JS -->
+    </div>
+  </main>
+
+  <!-- particles.js via CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
